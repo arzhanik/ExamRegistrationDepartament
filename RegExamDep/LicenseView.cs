@@ -2,8 +2,6 @@ namespace RedExamDep;
 
 sealed class LicenseView : View
 {
-    public Dictionary<DateOnly, bool> ExamDays { get; set; }
-
     public enum DriverPoints
     {
         A,
@@ -12,6 +10,4 @@ sealed class LicenseView : View
         D,
         E
     }
-
-    
 }
