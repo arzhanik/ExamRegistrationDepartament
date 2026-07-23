@@ -26,6 +26,8 @@ public class ReserveInfo : ICalendarService
             return false;
         }
         ReservedUserAndDayInfo[day] = userSocialCardNumber;
+        ISaveService saveJson = new SaveInfoJson<Dictionary<DateOnly, ulong>>();
+        saveJson.Serialize(ReservedUserAndDayInfo);
         return true;
     }
 
