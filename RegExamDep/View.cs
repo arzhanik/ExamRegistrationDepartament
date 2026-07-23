@@ -7,6 +7,7 @@ public class View<T> : ViewService<T>
     public uint ViewID { get; set; }
     public string ViewName { get; set; }
     public T ViewInternalContent { get; set; }
+    public Dictionary<uint, T> ViewUpdate { get; set; }
 
     public View()
     {
@@ -21,6 +22,7 @@ public class View<T> : ViewService<T>
     public override void ViewInitialize(T content)
     {
         ViewInternalContent = content;
+        ViewUpdate[ViewID] = content;
     }
 
     public override void ViewShow()
@@ -42,5 +44,11 @@ public class View<T> : ViewService<T>
     public void PrintView()
     {
         Console.WriteLine($"View No {ViewID}  {ViewName}: .");
+    }
+
+    public void UpdateViewContent(T content)
+    {
+        //push into view internal content
+        ViewUpdate[ViewID] = content;
     }
 }
