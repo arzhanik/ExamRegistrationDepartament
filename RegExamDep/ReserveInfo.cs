@@ -3,7 +3,7 @@ namespace RedExamDep;
 public class ReserveInfo : ICalendarService
 {
     public Dictionary<DateOnly, ulong> ReservedUserAndDayInfo { get; set; }
-
+    private ISaveService SaveJson { get; set; }
     public ReserveInfo()
     {
         ReservedUserAndDayInfo = new Dictionary<DateOnly, ulong>(365);
@@ -12,6 +12,7 @@ public class ReserveInfo : ICalendarService
         {
             ReservedUserAndDayInfo[now.AddDays(dayCounter)] = 0;
         }
+        SaveJson = new SaveInfoJson<Dictionary<DateOnly, ulong>>();
     }
 
     public bool ChooseExamDay(DateOnly day, ulong userSocialCardNumber)
@@ -26,8 +27,7 @@ public class ReserveInfo : ICalendarService
             return false;
         }
         ReservedUserAndDayInfo[day] = userSocialCardNumber;
-        ISaveService saveJson = new SaveInfoJson<Dictionary<DateOnly, ulong>>();
-        saveJson.Serialize(ReservedUserAndDayInfo);
+        SaveJson.Serialize(ReservedUserAndDayInfo);
         return true;
     }
 
@@ -38,6 +38,7 @@ public class ReserveInfo : ICalendarService
     
     public void PrintExamDays()
     {
+        ReservedUserAndDayInfo = SaveJson.Deserialize<Dictionary<DateOnly, ulong>>();
         DateOnly start = DateOnly.FromDateTime(DateTime.Today);
 
         int currentYear = start.Year;
