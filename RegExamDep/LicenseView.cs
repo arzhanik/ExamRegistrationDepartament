@@ -1,6 +1,6 @@
 namespace RedExamDep;
 
-sealed class LicenseView : View
+sealed class LicenseView<T> : View<T>
 {
     public enum DriverPoints
     {
